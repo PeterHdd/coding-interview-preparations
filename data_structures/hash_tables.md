@@ -270,6 +270,9 @@ class Map<K, V>
 
 ### Linear Probing Implementation
 
+<details>
+<summary> Java Implementation </summary>
+
 ```java
 package tests;
 /**
@@ -461,3 +464,102 @@ public class LinearProbingHashTableTest
     }
 }
 ```
+</details>
+
+<details>
+<summary> Python Implementation </summary>
+
+```python
+class HashTable:
+    def __init__(self, size=10):
+        self.size = size
+        self.table = [None] * self.size
+        self.count = 0
+
+    def _hash_function(self, key):
+        return hash(key) % self.size
+
+    def _linear_probe(self, index):
+        return (index + 1) % self.size
+
+    def insert(self, key, value):
+        if self.count >= self.size * 0.7:
+            self._resize()
+
+        index = self._hash_function(key)
+        while self.table[index] is not None:
+            if self.table[index][0] == key:
+                self.table[index] = (key, value)
+                return
+            index = self._linear_probe(index)
+
+        self.table[index] = (key, value)
+        self.count += 1
+
+    def get(self, key):
+        index = self._hash_function(key)
+        original_index = index
+        while self.table[index] is not None:
+            if self.table[index][0] == key:
+                return self.table[index][1]
+            index = self._linear_probe(index)
+            if index == original_index:
+                break
+        raise KeyError(key)
+
+    def delete(self, key):
+        index = self._hash_function(key)
+        original_index = index
+        while self.table[index] is not None:
+            if self.table[index][0] == key:
+                self.table[index] = None
+                self.count -= 1
+                self._shift_elements(index)
+                return
+            index = self._linear_probe(index)
+            if index == original_index:
+                break
+        raise KeyError(key)
+
+    def _shift_elements(self, index):
+        i = self._linear_probe(index)
+        while self.table[i] is not None:
+            prev_hash = self._hash_function(self.table[i][0])
+            if (i > index and (prev_hash <= index or prev_hash > i)) or \
+               (i < index and (prev_hash <= index and prev_hash > i)):
+                self.table[index] = self.table[i]
+                self.table[i] = None
+                index = i
+            i = self._linear_probe(i)
+
+    def _resize(self):
+        old_table = self.table
+        self.size *= 2
+        self.table = [None] * self.size
+        self.count = 0
+        for item in old_table:
+            if item:
+                self.insert(item[0], item[1])
+
+    def __str__(self):
+        return str([item for item in self.table if item is not None])
+
+ht = HashTable()
+ht.insert("apple", 5)
+ht.insert("banana", 7)
+ht.insert("cherry", 3)
+
+print(ht)  # Output: [('apple', 5), ('banana', 7), ('cherry', 3)]
+print(ht.get("banana"))  # Output: 7
+
+ht.delete("apple")
+print(ht)  # Output: [('cherry', 3), ('banana', 7)]
+
+try:
+    ht.get("apple")
+except KeyError:
+    print("Apple not found")  # This will be printed
+
+```
+
+</details>

@@ -30,6 +30,9 @@ Some implementations use arrays or array lists, which mean that the operations h
 
 ## Queue Implementation
 
+<details>
+<summary> Java Implementation </summary>
+
 ```java
 package tests;
 
@@ -78,5 +81,101 @@ public class Queue {
 		return data;
 	}
 }
-
 ```
+
+</details>
+
+<details>
+<summary> Python Implementation </summary>
+
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class Queue:
+    def __init__(self):
+        self.front = None
+        self.rear = None
+        self.size = 0
+
+    def is_empty(self):
+        return self.front is None
+
+    def enqueue(self, item):
+        new_node = Node(item)
+        if self.is_empty():
+            self.front = self.rear = new_node
+        else:
+            self.rear.next = new_node
+            self.rear = new_node
+        self.size += 1
+
+    def dequeue(self):
+        if self.is_empty():
+            raise IndexError("Queue is empty")
+        item = self.front.data
+        self.front = self.front.next
+        self.size -= 1
+        if self.front is None:
+            self.rear = None
+        return item
+
+    def front_item(self):
+        if self.is_empty():
+            raise IndexError("Queue is empty")
+        return self.front.data
+
+    def get_size(self):
+        return self.size
+
+    def __str__(self):
+        if self.is_empty():
+            return "[]"
+        current = self.front
+        items = []
+        while current:
+            items.append(str(current.data))
+            current = current.next
+        return "[" + " <- ".join(items) + "]"
+
+# Create a new queue
+my_queue = Queue()
+
+# Enqueue some items
+my_queue.enqueue("Task 1")
+my_queue.enqueue("Task 2")
+my_queue.enqueue("Task 3")
+
+# Display the queue
+print("Queue:", my_queue)  # Output: Queue: ['Task 1' <- 'Task 2' <- 'Task 3']
+
+# Check the size
+print("Size:", my_queue.get_size())  # Output: Size: 3
+
+# Check the front item
+print("Front item:", my_queue.front_item())  # Output: Front item: Task 1
+
+# Dequeue an item
+dequeued_item = my_queue.dequeue()
+print("Dequeued:", dequeued_item)  # Output: Dequeued: Task 1
+
+# Display the updated queue
+print("Updated queue:", my_queue)  # Output: Updated queue: ['Task 2' <- 'Task 3']
+
+# Check if the queue is empty
+print("Is empty?", my_queue.is_empty())  # Output: Is empty? False
+
+# Dequeue remaining items
+print(my_queue.dequeue())  # Output: Task 2
+print(my_queue.dequeue())  # Output: Task 3
+
+# Try to dequeue from an empty queue
+try:
+    my_queue.dequeue()
+except IndexError as e:
+    print("Error:", e)  # Output: Error: Queue is empty
+```
+
+</details>

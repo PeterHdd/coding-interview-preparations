@@ -33,6 +33,9 @@
 
 ## Red Black tree Implementation
 
+<details>
+<summary> Red Black Tree </summary>
+
 ```java
 package tests;
 import java.util.Scanner;
@@ -413,3 +416,116 @@ public class RedBlackTree {
  * http://www.codebytes.in/2014/10/red-black-tree-java-implementation.html
  */
  ```
+
+ </details>
+
+ <details>
+ <summary> Python Implementation </summary>
+
+ ```python
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+        self.parent = None
+        self.color = 'RED'
+
+class RedBlackTree:
+    def __init__(self):
+        self.NIL = Node(None)
+        self.NIL.color = 'BLACK'
+        self.root = self.NIL
+
+    def insert(self, value):
+        new_node = Node(value)
+        new_node.left = self.NIL
+        new_node.right = self.NIL
+
+        y = None
+        x = self.root
+
+        while x != self.NIL:
+            y = x
+            if new_node.value < x.value:
+                x = x.left
+            else:
+                x = x.right
+
+        new_node.parent = y
+        if y == None:
+            self.root = new_node
+        elif new_node.value < y.value:
+            y.left = new_node
+        else:
+            y.right = new_node
+
+        self.fix_insert(new_node)
+
+    def fix_insert(self, k):
+        while k.parent and k.parent.color == 'RED':
+            if k.parent == k.parent.parent.right:
+                u = k.parent.parent.left
+                if u.color == 'RED':
+                    u.color = 'BLACK'
+                    k.parent.color = 'BLACK'
+                    k.parent.parent.color = 'RED'
+                    k = k.parent.parent
+                else:
+                    if k == k.parent.left:
+                        k = k.parent
+                        self.right_rotate(k)
+                    k.parent.color = 'BLACK'
+                    k.parent.parent.color = 'RED'
+                    self.left_rotate(k.parent.parent)
+            else:
+                u = k.parent.parent.right
+                if u.color == 'RED':
+                    u.color = 'BLACK'
+                    k.parent.color = 'BLACK'
+                    k.parent.parent.color = 'RED'
+                    k = k.parent.parent
+                else:
+                    if k == k.parent.right:
+                        k = k.parent
+                        self.left_rotate(k)
+                    k.parent.color = 'BLACK'
+                    k.parent.parent.color = 'RED'
+                    self.right_rotate(k.parent.parent)
+            if k == self.root:
+                break
+        self.root.color = 'BLACK'
+
+    def left_rotate(self, x):
+        y = x.right
+        x.right = y.left
+        if y.left != self.NIL:
+            y.left.parent = x
+        y.parent = x.parent
+        if x.parent == None:
+            self.root = y
+        elif x == x.parent.left:
+            x.parent.left = y
+        else:
+            x.parent.right = y
+        y.left = x
+        x.parent = y
+
+    def right_rotate(self, x):
+        y = x.left
+        x.left = y.right
+        if y.right != self.NIL:
+            y.right.parent = x
+        y.parent = x.parent
+        if x.parent == None:
+            self.root = y
+        elif x == x.parent.right:
+            x.parent.right = y
+        else:
+            x.parent.left = y
+        y.right = x
+        x.parent = y
+
+ ```
+ 
+</details>
