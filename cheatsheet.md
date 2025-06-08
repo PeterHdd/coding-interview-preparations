@@ -38,6 +38,56 @@ def lengthOfLongestSubstring(s):
     return max_len
 ```
 
+### Explanation
+
+The core idea of the algorithm, is to think that you have a window size and you need to be shrinking/expanding the size usually from the left. To give an example, you need to find the max average subarray that would be of length k, so immediately we know that the window size needs to be equal to `k`. So if we have the following:
+
+```
+[1,12,-5,-6,50,3], k = 4
+```
+And we would be setting the left to `0`, looping and then getting the window size which would be `right - left + 1`. So now the goal is to get the max avg with length k, so we need to calculate max. We would have the following in each loop:
+
+```
+##step 0
+res = float('-inf')
+curr = 1
+window_size = 1 (0 - 0 + 1)
+
+## step 1
+res = float('-inf')
+curr = 13
+window_size = 2 (1 - 0 + 1)
+
+## step 2
+res = float('-inf')
+curr = 8
+window_size = 2 (1 - 0 + 1)
+
+## step 3
+res = float('-inf')
+curr = 2
+window_size = 3 (2 - 0 + 1)
+
+## step 4
+res = 0.5 (2/4)
+curr = 2
+window_size = 4 (3 - 0 + 1)
+## here window size is 4 so we calculate max, since we need to keep iterating we use the max() function to keep track of the maximum avg subarray
+## now we remove the first element form the current sum by doing curr -= nums[left] and left here is still 0 so we increment left to keep the window size same as `k` so `left+=1` and now `curr` is equal to `1`
+
+## step 5
+res = 12.75 (51/4)
+curr = 51
+window_size = 4 (4 - 1 + 1)
+## again max is calculated here and stored to `res`, then again we remove `left` from the current sum and increment it once and keep going until we have iterated in the whole array.
+```
+
+#### Note
+
+* `float('-inf')` Negative infinity
+* `float('inf')` Positive infinity
+* to convert a number to a float do `float(num)`, that's needed to get the correct decimal answer if using python 2
+
 ### 🔍 When to Use
 
 * Process **contiguous subarrays/substrings** efficiently
@@ -58,6 +108,7 @@ for right in range(len(s)):
 
 * Window expands but never shrinks → can lead to overflow
 * Right pointer reaches end, but left logic doesn’t catch up
+  
 
 ### 🧪 Example Problem
 
