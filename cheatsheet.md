@@ -345,6 +345,12 @@ heapq.heappop(heap)
 
 ## 📌 Backtracking
 
+Backtracking = "Try a decision, go deeper, undo it, try next decision."
+
+You build a solution incrementally, one piece at a time, and:
+* If a partial solution is invalid or complete, you return (backtrack).
+* Otherwise, recurse deeper by choosing the next option.
+
 ### 💻 Code Example
 
 ```python
@@ -377,7 +383,7 @@ def combinationSum(candidates, target):
 ```python
 def backtrack(path):
     if base_case:
-        result.append(path[:])
+        result.append(path[:]) ## copies list path to result
         return
     for option in options:
         path.append(option)
@@ -385,10 +391,46 @@ def backtrack(path):
         path.pop()
 ```
 
+## Notes
+
+* in python `a_list.append(a_dict)` → store a reference to `a_dict`, so if `a_dict` changes then also `a_list` changes. That's why you use `path[:]` to create a new list object in the heap with the same contents.
+
 ### 💡 Edge Cases
 
 * Forgetting to backtrack (`path.pop()`) = incorrect answers
 * Duplicate paths (need sorting + skip conditions)
+
+## Example
+
+If you are given:
+
+Input: `s = "3z4"`
+Output: `["3z4","3Z4"]`
+
+You need to find all combination of the string `s`. In this case you need to backtrack to get all combinations, you can first think about it as a tree:
+
+Backtracking Tree for Input: "3z4"
+
+```
+"" (index = 0)
+└── "3" (index = 1)
+    ├── "3z" (index = 2)
+    │   └── "3z4" (index = 3) ✅ add to result
+    └── "3Z" (index = 2)
+        └── "3Z4" (index = 3) ✅ add to result
+
+```
+So here you need to be building the strings to add in the array, so the base case would be if the string that is build is same size as the original string then add to result and return. Then in the loop you backtrack and you add either lowercase, uppercase or digit to the string. You would have the following call stack:
+
+```
+dfs("", 0)
+└── dfs("3", 1)         # '3' is digit → one path only
+    ├── dfs("3Z", 2)    # 'z' → uppercase
+    │   └── dfs("3Z4", 3) ✅ base case → add "3Z4"
+    └── dfs("3z", 2)    # 'z' → lowercase
+        └── dfs("3z4", 3) ✅ base case → add "3z4"
+
+```
 
 
 ### 🧪 Example Problem
