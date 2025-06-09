@@ -140,6 +140,24 @@ def subarraySum(nums, k):
 * prefix sum calculation: prefix[i+1] = prefix[i] + nums[i]
 
 
+### Notes
+
+* you need to first be looping and getting the total sum
+* then ask yourself have I ever seen a total sum that is `total - k`
+* prefix = {0: 1} track all the prefix sum already seen
+* If `total - k` exists in the hashmap, that means there’s a subarray ending at current index that sums to k, so add that to the hashmap.
+
+#### Example
+
+| Step | num | total | total - k | count | prefix                          |
+|------|-----|-------|------------|--------|----------------------------------|
+| 1    | 1   | 1     | -2         | 0      | {0:1, 1:1}                      |
+| 2    | 2   | 3     | 0          | 1      | {0:1, 1:1, 3:1}                 |
+| 3    | 3   | 6     | 3          | 2      | {0:1, 1:1, 3:1, 6:1}            |
+
+nums = [1, 2, 3]
+k = 3
+
 ### 🧠 Core Lines You'll Always Write
 
 ```python
@@ -194,7 +212,7 @@ step 3
 
 i = 2 / total = 2 / (total - goal) => 2-2 = 0 => 1 (so 0 would be equal to the base case which is 1)
 
-that's why we initialize prefix = {0: 1} which means, before we started, we’ve already seen a sum of 0 exactly once.So this way we won't miss the subarray that starts at index 0.
+that's why we initialize prefix = {0: 1} which means, before we started, we’ve already seen a sum of 0 exactly once. So this way we won't miss the subarray that starts at index 0.
 ```
 
 ---
@@ -491,14 +509,74 @@ return merge(left, right)
 ## 📌 Pattern Decision Tree
 
 ```text
-Graph or Tree?
+Problem involves a Graph or Tree?
 ├── Yes:
-│   ├── Need shortest path? → BFS / Dijkstra
-│   └── Need all paths/combinations? → DFS / Backtracking
+│   ├── Unweighted shortest path? → BFS
+│   ├── Weighted shortest path? → Dijkstra / Bellman-Ford / A*
+│   ├── Need all paths, traversals, or recursion? → DFS
+│   ├── Need to build combinations or choices in a tree? → Backtracking
+│   ├── Topological ordering? → Kahn’s Algorithm / DFS with stack
+│   ├── Cycle detection? → DFS with visited + stack or Union Find
+│   └── Is it a Tree? → Recursive DFS / BFS / Binary Tree patterns
+
 └── No:
-    ├── Is input sorted? → Two Pointers / Binary Search
-    ├── Need subarray sum/max? → Prefix Sum / Sliding Window / Kadane
-    └── Optimal decision chain? → Dynamic Programming
+    ├── Is input sorted or can be sorted?
+    │   ├── Yes:
+    │   │   ├── Searching a value? → Binary Search
+    │   │   ├── Find pair/triplet with condition? → Two Pointers / Sliding Window
+    │   │   └── Count comparisons / inversions? → Merge Sort
+    │   └── No:
+    │       ├── Can sorting help? → Try sorting first, then two pointers or greedy
+
+    ├── Need to process every contiguous window/subarray?
+    │   ├── Fixed size? → Sliding Window
+    │   └── Variable size / max/min range? → Sliding Window + HashMap / Deque
+
+    ├── Need prefix sums, range sum, or frequency tracking?
+    │   ├── Sum of subarrays or ranges? → Prefix Sum / HashMap
+    │   └── Frequency maps / counts? → HashMap + Prefix / Sliding Window
+
+    ├── Need to track maximum/minimum efficiently?
+    │   ├── Kth largest / median / streaming? → Heap (Priority Queue)
+    │   └── With indexes/sliding range? → Monotonic Queue
+
+    ├── Need optimal value or number of ways to reach a goal?
+    │   └── Dynamic Programming
+    │       ├── Overlapping subproblems? → Memoization (Top-down)
+    │       └── Tabulation possible? → Bottom-up DP
+
+    ├── Need to generate all combinations / subsets / permutations?
+    │   └── Backtracking / DFS
+
+    ├── Array with max sum / product / condition?
+    │   └── Kadane's Algorithm / Greedy / DP
+
+    ├── Need to merge, sort, or partition?
+    │   ├── Sorting problem? → Merge Sort / Quick Sort
+    │   └── Median or K-th element? → QuickSelect
+
+    ├── Need to manage disjoint sets or components?
+    │   └── Union-Find / DSU (Disjoint Set Union)
+
+    ├── Repeated patterns / cyclic / modulo math?
+    │   └── Hashing + Modulo / Cycle detection
+
+    ├── Optimizing a greedy choice? → Greedy Algorithm
+    │   ├── Intervals, scheduling, coin change, etc.
+
+    ├── Need to search over a result or range space?
+    │   └── Binary Search on Answer
+
+    ├── Simulating constraints / time or space step-by-step?
+    │   └── Brute Force / BFS / Simulation / Queue
+
+    ├── Need to compress or encode efficiently?
+    │   └── Huffman Encoding / Trie
+
+    └── Pattern in strings or substrings?
+        ├── Pattern search? → KMP / Rabin-Karp
+        └── Palindromes, repeats, anagrams? → Sliding Window / HashMap / DP
+
 ```
 
 ---
