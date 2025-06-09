@@ -13,8 +13,9 @@ This cheatsheet summarizes core algorithmic patterns, when to use them, how they
 5. [Heap (Priority Queue)](#heap-priority-queue)
 6. [Backtracking](#backtracking)
 7. [Dijkstra’s Algorithm](#dijkstras-algorithm)
-8. [Pattern Decision Tree](#pattern-decision-tree)
-9. [Quick Reference Summary](#quick-reference-summary)
+8. [Merge Sort](#merge-sort)
+9. [Pattern Decision Tree](#pattern-decision-tree)
+10. [Quick Reference Summary](#quick-reference-summary)
 
 ---
 
@@ -317,6 +318,22 @@ def findKthLargest(nums, k):
             heapq.heappop(heap)
     return heapq.heappop(heap)
 ```
+
+### Notes
+
+* A **heap** is a **complete binary tree** used to efficiently get the **min or max** element.
+* Commonly implemented using an **array**.
+* It satisfies the **heap property**:
+  - **Min-heap**: parent ≤ children → root is smallest
+  - **Max-heap**: parent ≥ children → root is largest
+
+* Python’s `heapq` is a min-heap by default
+* To simulate a max-heap: store -x instead of x
+* Operations:
+    - `heapq.heappush(heap, x)` → O(log n) => pushes element to the heap
+    - `heapq.heappop(heap)` → O(log n) => removes the smallest element in the heap in a min-heap
+    - `heapq.heapify(list)` → O(n) => first you need to heapify the list
+    - `heap[0]` -> in case you have a list called `heap` that is heapified then `heap[0]` would always have the smallest element
 
 ### 🔍 When to Use
 
