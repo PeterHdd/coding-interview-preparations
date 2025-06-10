@@ -220,11 +220,13 @@ that's why we initialize prefix = {0: 1} which means, before we started, we’ve
 
 ## 📌 Dynamic Programming (DP)
 
+Dynamic Programming is an optimization technique used to solve overlapping subproblems with optimal substructure, by storing intermediate results (memoization or tabulation) to avoid redundant work.
+
 ### 💻 Code Example
 
 ```python
 def longestCommonSubsequence(text1, text2):
-    dp = [[0] * (len(text2) + 1) for _ in range(len(text1) + 1)]
+    dp = [[0] * (len(text2) + 1) for _ in range(len(text1) + 1)] ## creates a 2d array
 
     for i in range(1, len(text1) + 1):
         for j in range(1, len(text2) + 1):
@@ -240,14 +242,13 @@ def longestCommonSubsequence(text1, text2):
 
 * When solution to a problem depends on **solutions to subproblems**
 * Look for:
-
   * Optimal values (max/min/ways)
   * Recurrence relation (`dp[i] = dp[i-1] + dp[i-2]`)
 
 ### 🧠 Core Lines You'll Always Write
 
 ```python
-dp = [0] * (n+1)
+dp = [0] * (n+1) ## this creates a list with 0s with size n+1
 dp[0] = base_case
 for i in range(1, n+1):
     dp[i] = ... # fill using relation
@@ -257,6 +258,41 @@ for i in range(1, n+1):
 
 * Incorrect base cases cause full chain failure
 * Index out of bounds (especially in top-down recursion)
+
+### 🔁 Types of DP
+
+#### 1. Top-Down (Memoization)
+- Recursive approach with caching
+- Easy to write and understand
+- Uses a hash map or `@lru_cache`
+
+#### 2. Bottom-Up (Tabulation)
+- Iterative approach
+- Usually more efficient
+- Builds from base case up
+
+### 📘 Top-Down Template (with Memoization)
+
+```python
+memo = {}
+def dp(i):
+    if i in memo:
+        return memo[i]
+    if base_case:
+        return ...
+    memo[i] = combine(dp(i-1), dp(i-2))
+    return memo[i]
+```
+
+### 📘 Bottom-Up Template (Tabulation)
+
+```python
+dp = [0] * (n + 1)
+dp[0] = base_value
+
+for i in range(1, n + 1):
+    dp[i] = combine(dp[i-1], dp[i-2], ...)
+```
 
 
 ### 🧪 Example Problem
@@ -280,7 +316,7 @@ def maxSubArray(nums):
 
 ### 🔍 When to Use
 
-* Find **maximum sum of a contiguous subarray**
+* Kadane’s Algorithm is used to find the maximum sum of a contiguous subarray within a 1D array of integers.
 * Elegant linear-time DP trick
 
 ### 🧠 Core Lines You'll Always Write
