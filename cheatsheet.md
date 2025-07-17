@@ -16,7 +16,6 @@ This cheatsheet summarizes core algorithmic patterns, when to use them, how they
 8. [Merge Sort](#merge-sort)
 9. [Pattern Decision Tree](#pattern-decision-tree)
 10. [Quick Reference Summary](#quick-reference-summary)
-11. [Python Notes](#python-notes)
 
 ---
 
@@ -689,10 +688,3 @@ Problem involves a Graph or Tree?
 | Backtracking   | Exponential       | O(n)             | Permutations, combinations         |
 | Dijkstra       | O(E log V)        | O(V)             | Shortest path in weighted graph    |
 | Merge Sort     | O(n log n)        | O(n)             | Stable sorting, inversion counting |
-
-
-## Python Notes
-
-* Strings are immutable just like in Java, to change a character you can convert it to a list by doing `list(s)` and then after the changes are done just use `join()` to create a new modified string.
-
-* `set()` takes an iterable (tuple, string, etc) and then adds its elements to the set.
