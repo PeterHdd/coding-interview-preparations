@@ -2,7 +2,7 @@
 
 * Strings are immutable just like in Java, to change a character you can convert it to a list by doing `list(s)` and then after the changes are done just use `join()` to create a new modified string.
 
-* `set()` takes an iterable (tuple, string, etc) and then adds its elements to the set.
+* `set()` takes an iterable (tuple, string, etc) and then adds its elements to the set. 
 
 -----
 
