@@ -35,3 +35,68 @@ In Python, an iterable is any object that implements __iter__(), including:
 - Dictionaries (dict)
 
 Generators are instances of the built-in generator type and conform to both Iterable and Iterator via Python’s collections.abc.
+
+-----
+
+* `lambda`
+
+A `lambda` is an **anonymous function**, a function without a name.
+
+### Example
+```python
+f = lambda x: x * 2
+```
+
+Equivalent to:
+
+```python
+def f(x):
+    return x * 2
+```
+
+----
+
+* `global`
+
+Used inside a function to tell Python you want to modify a module-level variable.
+
+Example:
+
+```py
+x = 10
+
+def change():
+    global x
+    x = 99
+```
+
+
+Without `global x`, Python would treat `x = 99` as a local variable.
+
+----
+
+* `*args`
+
+Captures extra positional arguments into a tuple.
+
+```py
+def f(*args):
+    print(args)
+
+f(1, 2, 3)  # (1, 2, 3)
+```
+
+-----
+
+ * `**kwargs`
+
+Captures extra keyword arguments into a dictionary.
+
+```py
+def f(**kwargs):
+    print(kwargs)
+
+f(name="John", occupation="engineer")
+```
+
+----
