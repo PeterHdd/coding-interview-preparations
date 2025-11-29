@@ -258,6 +258,7 @@ for i in range(1, n+1):
 
 * Incorrect base cases cause full chain failure
 * Index out of bounds (especially in top-down recursion)
+* Not caching subproblem results → leads to TLE (time limit exceeded)
 
 ### 🔁 Types of DP
 
